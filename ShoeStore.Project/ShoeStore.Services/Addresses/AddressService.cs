@@ -24,7 +24,7 @@ namespace ShoeStore.Services.Addresses
         {
             if (id < 1) throw new ArgumentException(nameof(id));
 
-            var address = addressRepository.Get(id);
+            var address = addressRepository.GetById(id);
 
             if (address == null) return null;
             var addressDto = new AddressDto
@@ -40,8 +40,8 @@ namespace ShoeStore.Services.Addresses
         public AddressDto GetAdressByUserID(int id)
         {
             if (id < 0) throw new ArgumentException(nameof(id));
-            var address = addressRepository.Get(id);
-            var user = userRepository.Get(id);
+            var address = addressRepository.GetById(id);
+            var user = userRepository.GetById(id);
             if (address == null) return null;
             if (user == null) return null;
 

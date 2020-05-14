@@ -11,7 +11,7 @@ namespace ShoeStore.Data
         void Add(T entity);
         void Update(T entity);
         List<T> GetAll();
-        T Get(int id);
+        T GetById(int id);
         void Delete(T entity);
         void Delete(IEnumerable<T> entities);
         IQueryable<T> Query();

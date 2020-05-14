@@ -30,7 +30,7 @@ namespace ShoeStore.Data
             _dbSet.RemoveRange(entities);
         }
 
-        public T Get(int id)
+        public T GetById(int id)
         {
             return _dbSet.Find(id);
         }

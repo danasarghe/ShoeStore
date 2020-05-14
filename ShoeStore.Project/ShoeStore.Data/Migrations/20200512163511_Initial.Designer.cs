@@ -10,7 +10,7 @@ using ShoeStore.Data;
 namespace ShoeStore.Data.Migrations
 {
     [DbContext(typeof(ShoeStoreContext))]
-    [Migration("20200510195609_Initial")]
+    [Migration("20200512163511_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,7 +49,7 @@ namespace ShoeStore.Data.Migrations
 
             modelBuilder.Entity("ShoeStore.Data.Entities.Brand", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("BrandId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -57,7 +57,7 @@ namespace ShoeStore.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("BrandId");
 
                     b.ToTable("Brands");
                 });
@@ -147,6 +147,9 @@ namespace ShoeStore.Data.Migrations
                     b.Property<int>("Genre")
                         .HasColumnType("int");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -227,7 +230,7 @@ namespace ShoeStore.Data.Migrations
             modelBuilder.Entity("ShoeStore.Data.Entities.Product", b =>
                 {
                     b.HasOne("ShoeStore.Data.Entities.Brand", "Brand")
-                        .WithMany()
+                        .WithMany("Products")
                         .HasForeignKey("BrandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

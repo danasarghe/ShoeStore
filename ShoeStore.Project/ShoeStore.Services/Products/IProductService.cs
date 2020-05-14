@@ -10,7 +10,7 @@ namespace ShoeStore.Services.Products
         void Add(ProductDto productDto);
         void Delete(int id);
         ProductDto Get(int id);
-        List<ProductDto> GetAll();
+        IEnumerable<ProductDto> GetAll();
         void Update(ProductDto productDto);
 
     }

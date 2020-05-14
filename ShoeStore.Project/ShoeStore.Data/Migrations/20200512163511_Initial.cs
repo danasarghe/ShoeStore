@@ -11,13 +11,13 @@ namespace ShoeStore.Data.Migrations
                 name: "Brands",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    BrandId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Brands", x => x.Id);
+                    table.PrimaryKey("PK_Brands", x => x.BrandId);
                 });
 
             migrationBuilder.CreateTable(
@@ -63,7 +63,8 @@ namespace ShoeStore.Data.Migrations
                     Title = table.Column<int>(nullable: false),
                     Price = table.Column<decimal>(nullable: false),
                     Size = table.Column<int>(nullable: false),
-                    Genre = table.Column<int>(nullable: false)
+                    Genre = table.Column<int>(nullable: false),
+                    Image = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -72,7 +73,7 @@ namespace ShoeStore.Data.Migrations
                         name: "FK_Products_Brands_BrandId",
                         column: x => x.BrandId,
                         principalTable: "Brands",
-                        principalColumn: "Id",
+                        principalColumn: "BrandId",
                         onDelete: ReferentialAction.Cascade);
                 });
 

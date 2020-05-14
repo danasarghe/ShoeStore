@@ -1,5 +1,6 @@
 ﻿using ShoeStore.Data;
 using ShoeStore.Data.Entities;
+using ShoeStore.Services.Brands;
 using ShoeStore.Services.Products.Dto;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,13 @@ namespace ShoeStore.Services.Products
     {
         private readonly IRepository<Product> productRepository;
         private readonly IUnitOfWork unitOfWork;
+        private readonly IBrandService brandService;
 
-        public ProductService(IRepository<Product> productRepository, IUnitOfWork unitOfWork)
+        public ProductService(IRepository<Product> productRepository, IUnitOfWork unitOfWork, IBrandService brandService)
         {
             this.productRepository = productRepository;
             this.unitOfWork = unitOfWork;
+            this.brandService = brandService;
         }
         public void Add(ProductDto productDto)
         {
@@ -25,10 +28,12 @@ namespace ShoeStore.Services.Products
             var product = new Product
             {
                 Id = productDto.Id,
-                BrandId = productDto.BrandId,
+                Brand = productDto.Brand,
                 Title = productDto.Title,
+                Genre = productDto.Genre,
                 Price = productDto.Price,
-                Size = productDto.Size
+                Size = productDto.Size,
+                Image = productDto.Image
             };
             productRepository.Add(product);
             unitOfWork.Commit();
@@ -36,9 +41,9 @@ namespace ShoeStore.Services.Products
 
         public void Delete(int id)
         {
-            if (id < 0) throw new ArgumentException(nameof(id));
+            //if (id < 0) throw new ArgumentException(nameof(id));
 
-            var product = productRepository.Get(id);
+            var product = productRepository.GetById(id);
             if (product == null) throw new Exception($"Product with id :{id} was not found");
 
             productRepository.Delete(product);
@@ -48,29 +53,33 @@ namespace ShoeStore.Services.Products
 
         public ProductDto Get(int id)
         {
-            if (id < 0) throw new ArgumentException(nameof(id));
+            //if (id < 0) throw new ArgumentException(nameof(id));
 
-            var product = productRepository.Get(id);
+            var product = productRepository.GetById(id);
             if (product == null) return null;
 
             var productDto = new ProductDto
             {
                 Id = product.Id,
-                BrandId = product.BrandId,
+                Image = product.Image,
+                Brand = product.Brand,
                 Title = product.Title,
+                Genre = product.Genre,
                 Price = product.Price,
                 Size = product.Size
             };
             return productDto;
         }
 
-        public List<ProductDto> GetAll()
+        public IEnumerable<ProductDto> GetAll()
         {
             return productRepository.Query().Select(p => new ProductDto
             {
                 Id = p.Id,
-                BrandId = p.BrandId,
+                Image = p.Image,
+                BrandName = p.Brand.Name,
                 Title = p.Title,
+                Genre = p.Genre,
                 Price = p.Price,
                 Size = p.Size
             }).ToList();
@@ -95,12 +104,14 @@ namespace ShoeStore.Services.Products
         public void Update(ProductDto productDto)
         {
             if (productDto == null) throw new ArgumentNullException(nameof(productDto));
-            var product = productRepository.Get(productDto.Id);
+            var product = productRepository.GetById(productDto.Id);
             if (product == null) throw new Exception($"Product with Id = {product.Id} was not found");
 
-            product.BrandId = productDto.BrandId;
+            product.Brand = productDto.Brand;
+            product.Image = productDto.Image;
             product.Price = productDto.Price;
             product.Title = productDto.Title;
+            product.Genre = productDto.Genre;
             product.Size = productDto.Size;
 
             productRepository.Update(product);

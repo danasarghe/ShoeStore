@@ -19,7 +19,7 @@ namespace ShoeStore.Services.Users
         public UserDto Get(int id)
         {
             if (id < 0) throw new ArgumentException(nameof(id));
-            var user = userRepository.Get(id);
+            var user = userRepository.GetById(id);
             if (user == null) throw new ArgumentNullException($"User with Id : {id} was not found");
 
             var userDto = new UserDto

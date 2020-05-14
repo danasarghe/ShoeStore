@@ -47,7 +47,7 @@ namespace ShoeStore.Data.Migrations
 
             modelBuilder.Entity("ShoeStore.Data.Entities.Brand", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("BrandId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -55,7 +55,7 @@ namespace ShoeStore.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("BrandId");
 
                     b.ToTable("Brands");
                 });
@@ -139,11 +139,14 @@ namespace ShoeStore.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BrandId")
+                    b.Property<int?>("BrandId")
                         .HasColumnType("int");
 
                     b.Property<int>("Genre")
                         .HasColumnType("int");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -225,10 +228,8 @@ namespace ShoeStore.Data.Migrations
             modelBuilder.Entity("ShoeStore.Data.Entities.Product", b =>
                 {
                     b.HasOne("ShoeStore.Data.Entities.Brand", "Brand")
-                        .WithMany()
-                        .HasForeignKey("BrandId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Products")
+                        .HasForeignKey("BrandId");
                 });
 #pragma warning restore 612, 618
         }

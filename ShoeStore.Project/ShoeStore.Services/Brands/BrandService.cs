@@ -31,7 +31,7 @@ namespace ShoeStore.Services.Brands
         {
             if (id < 1) throw new ArgumentException(nameof(id));
 
-            var brand = brandRepository.Get(id);
+            var brand = brandRepository.GetById(id);
             if(brand==null) throw new Exception($"Brand with id :{id} was not found");
 
             brandRepository.Delete(brand);
@@ -40,14 +40,14 @@ namespace ShoeStore.Services.Brands
 
         public BrandDto Get(int id)
         {
-            if (id < 1) throw new ArgumentException(nameof(id));
+            //if (id < 1) throw new ArgumentException(nameof(id));
 
-            var brand = brandRepository.Get(id);
+            var brand = brandRepository.GetById(id);
             if (brand == null) return null;
 
             var brandDto = new BrandDto
             {
-                Id = brand.Id,
+                BrandId = brand.BrandId,
                 Name = brand.Name
             };
 
@@ -63,7 +63,7 @@ namespace ShoeStore.Services.Brands
             {
                 var brandDto = new BrandDto
                 {
-                    Id = brand.Id,
+                    BrandId = brand.BrandId,
                     Name = brand.Name
                 };
                 brandDtos.Add(brandDto);
@@ -76,9 +76,9 @@ namespace ShoeStore.Services.Brands
         {
             if (brandDto == null) throw new ArgumentNullException(nameof(brandDto));
 
-            var brand = brandRepository.Get(brandDto.Id);
+            var brand = brandRepository.GetById(brandDto.BrandId);
 
-            if (brand == null) throw new Exception($"Brand with Id = {brandDto.Id} was not found");
+            if (brand == null) throw new Exception($"Brand with Id = {brandDto.BrandId} was not found");
 
             brand.Name = brandDto.Name;
 

@@ -23,6 +23,15 @@ a {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+body {
+    
+        background-image: url('../images/red-sneakers.jpg');
+        background-color:cornsilk;
+        background-size:cover;
+        background-position:center center;
+        background-repeat:no-repeat;
+        margin:auto;
+}
 
 /* Sticky footer styles
 -------------------------------------------------- */
